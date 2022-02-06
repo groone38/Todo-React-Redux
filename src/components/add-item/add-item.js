@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import './add-item.sass'
+import {connect} from "react-redux";
+import {addItem} from "../store/action/addItem";
 
 class AddItem extends Component {
 
@@ -25,7 +27,7 @@ class AddItem extends Component {
 
     render() {
         return (
-            <form className={'item-add-form d-flex'} onSubmit={this.onSubmit}>
+            <form className={'item-add-form d-flex'} onSubmit={this.props.addItem(this.state.label)}>
                 <input type="text" className={'form-control'} onChange={this.onLabelChange}
                        placeholder={'What needs to be done'} value={this.state.label}/>
                 <button
@@ -40,4 +42,10 @@ class AddItem extends Component {
     }
 }
 
-export default AddItem;
+function mapDispatchToProps(dispatch) {
+    return {
+        addItem: label => dispatch(addItem(label))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(AddItem);
